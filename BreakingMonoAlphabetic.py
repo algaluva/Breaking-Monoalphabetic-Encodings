@@ -6,7 +6,7 @@ latinAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 enFreqAlphabet = 'ETAOINSHRDLCUMWFGYPBVKJXQZ'
 
 #recieve encoded message through console
-ecnryptedMsg = input('Enter Encrypted Text')
+ecnryptedMsg = input('Enter Encrypted Text\n')
 
 #count letters in ecnryptedMsg
 def getLetterCount(message):
@@ -19,26 +19,27 @@ def getLetterCount(message):
     return(letterCount)
 print('letterCount= ', getLetterCount(ecnryptedMsg))
 
-#determine frequncy in message compare to frequency in language
-def getFrequencyOrder(message):
-    letterCount = getLetterCount(message)
+#store all key-value-pairs in letterByFreq in a list
+def sortTuples(n):
+  return abs(n[1])
 
-    #"turn around" letters and count
-    letterByFreq = {}
-    for letter in latinAlphabet:
-        if letterCount[letter] not in letterByFreq:
-            letterByFreq[letterCount[letter]] = [letter]           #this creates a key in countLetter named after the amount of times
-        else:
-            letterByFreq[letterCount[letter]].append(letter)
+def dictionaryToString(countDictionary):
+    letterCountList = []
+    freqAlphabet = ''
     
+    for k in countDictionary:
+        letterTuple = (k, countDictionary[k])
+        letterCountList.append(letterTuple)
+    letterCountList.sort(key = sortTuples, reverse = True)
 
-    #Sorts letters by frequency and then puts them into a string (similart to engFreqList)
-    for freq in letterByFreq:
-        letterByFreq[freq].sort(key = enFreqAlphabet.find, reverse = False)
-        letterByFreq[freq] =''.join(letterByFreq[freq])
-    return(letterByFreq)
+    for i in letterCountList:
+        freqAlphabet += i[0]
+    return(freqAlphabet)
 
-print(getFrequencyOrder(ecnryptedMsg))
+print(dictionaryToString(getLetterCount(ecnryptedMsg)))
+
+
+
 
 #what to do about ambiguous characters?
 
